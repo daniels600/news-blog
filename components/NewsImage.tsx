@@ -15,7 +15,7 @@ export default function NewsImage({ src, alt }: NewsImageProps) {
       className="w-full object-cover rounded-xl"
       src={imgSrc}
       alt={alt}
-      onError={() => setImgSrc('/placeholder-news.jpg')}
+      onError={() => setImgSrc('/placeholder.jpg')}
     />
   )
 } 
