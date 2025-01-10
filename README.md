@@ -27,15 +27,15 @@ Before you begin, ensure you have the following installed:
 5. Add your API key to the `.env.local` file:
 
 ```env
-NEXT_PUBLIC_NEWS_API_KEY=your_api_key_here
+NEWS_API_KEY=your_api_key_here
 ```
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd news-api-reader
+git clone https://github.com/daniels600/news-blog
+cd news-blog
 ```
 
 2. Install dependencies:
@@ -139,7 +139,3 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
    - Verify the API endpoints are accessible
 
 For additional help, please open an issue in the repository.
-
----
-
-Remember to replace `<repository-url>` with your actual repository URL. If you need help setting up the project or encounter any issues, please open an issue in the repository.
