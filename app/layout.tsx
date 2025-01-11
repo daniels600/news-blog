@@ -42,7 +42,6 @@ export default function RootLayout({
           <TooltipProvider delayDuration={0}>
             <NavBar />
             {children}
-
             <PrelineScript />
             <NextTopLoader />
           </TooltipProvider>

@@ -1,13 +1,22 @@
-
+'use client';
 import { Newspaper } from "lucide-react";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ModeToggle } from './toggle-theme';
 
 const NavBar = () => {
+  const pathname = usePathname();
 
+  const getLinkClasses = (path: string) => {
+    const isActive = pathname === path;
+    return `py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 ${
+      isActive 
+        ? 'border-gray-800 text-gray-800 dark:border-neutral-200 dark:text-neutral-200' 
+        : 'border-transparent text-gray-500 hover:text-gray-800 dark:text-neutral-400 dark:hover:text-neutral-200'
+    } focus:outline-none`;
+  };
 
   return (
-
     <>
       <header className="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full text-sm">
         <nav className="mt-4 relative max-w-2xl w-full bg-white border border-gray-200 rounded-[2rem] mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto dark:bg-neutral-900 dark:border-neutral-700">
@@ -72,13 +81,13 @@ const NavBar = () => {
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-2 md:gap-3 mt-3 md:mt-0 py-2 md:py-0 md:ps-7">
               <Link
-                className="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200"
+                className={getLinkClasses('/')}
                 href="/"
               >
                 Home
               </Link>
               <Link
-                className="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200"
+                className={getLinkClasses('/about')}
                 href="/about"
               >
                 About
@@ -89,8 +98,7 @@ const NavBar = () => {
         </nav>
       </header>
     </>
+  );
+};
 
-  )
-}
-
-export default NavBar
+export default NavBar;
