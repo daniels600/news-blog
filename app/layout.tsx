@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 import NavBar from "@/components/navbar";
-
+import NextTopLoader from 'nextjs-toploader';
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <NavBar />
+        <NavBar />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -42,6 +42,7 @@ export default function RootLayout({
           <TooltipProvider delayDuration={0}>
             {children}
             <PrelineScript />
+            <NextTopLoader />
           </TooltipProvider>
         </ThemeProvider>
       </body>

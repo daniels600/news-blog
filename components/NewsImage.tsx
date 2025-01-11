@@ -27,7 +27,7 @@ export default function NewsImage({ src, alt }: NewsImageProps) {
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         quality={75}
-        onLoadingComplete={() => setIsLoading(false)}
+        onLoad={() => setIsLoading(false)}
         onError={(e) => {
           e.currentTarget.src = '/placeholder.jpg'
           setIsLoading(false)
