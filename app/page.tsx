@@ -13,7 +13,6 @@ export default function Home({
 
   return (
     <>
-     
       <Suspense fallback={<Loading />}>
         <NewsList page={page} category={category} query={query} />
       </Suspense>

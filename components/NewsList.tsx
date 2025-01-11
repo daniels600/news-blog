@@ -23,7 +23,7 @@ interface Article {
 }
 
 async function getNews(page: number, category?: string, query?: string) {
-  const itemsPerPage = 9 // Changed from 50 to match display count
+  const itemsPerPage = 20 
   const apiKey = process.env.NEWS_API_KEY
 
   try {
@@ -66,7 +66,7 @@ export default async function NewsList({ page, category, query }: { page: number
     const { articles: unfilteredArticles, totalResults } = await getNews(page, category, query)
 
     // Filter out articles with missing titles or descriptions
-    const articles = unfilteredArticles.filter((article: Article) =>
+    const validArticles = unfilteredArticles.filter((article: Article) =>
       article.title &&
       article.description &&
       article.title !== '[Removed]' &&
@@ -76,7 +76,14 @@ export default async function NewsList({ page, category, query }: { page: number
     );
 
     const itemsPerPage = 9
-    const totalPages = Math.ceil(totalResults / itemsPerPage)
+    // const totalPages = Math.ceil(totalResults / itemsPerPage)
+
+    const filterRatio = validArticles.length / unfilteredArticles.length
+    const estimatedTotalFilteredArticles = Math.floor(totalResults * filterRatio)
+    const totalPages = Math.ceil(estimatedTotalFilteredArticles / itemsPerPage)
+
+    // Ensure we have exactly itemsPerPage validArticles (or less for the last page)
+    const articles = validArticles.slice(0, itemsPerPage)
 
     if (!articles || articles.length === 0) {
       return (
@@ -150,7 +157,7 @@ export default async function NewsList({ page, category, query }: { page: number
           <div className="mt-12">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-sm text-gray-600 dark:text-gray-400 text-center sm:text-left">
-                Showing page {page} of {totalPages} ({totalResults} articles)
+                Showing page {page} of {totalPages} ({estimatedTotalFilteredArticles} articles)
               </p>
               <div className="w-full sm:w-auto overflow-x-auto">
                 <Pagination>

@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NavBar />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -40,7 +40,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider delayDuration={0}>
+            <NavBar />
             {children}
+
             <PrelineScript />
             <NextTopLoader />
           </TooltipProvider>
