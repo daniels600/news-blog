@@ -4,6 +4,7 @@ import PrelineScript from "@/components/PrelineScript";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
+import NavBar from "@/components/navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         <NavBar />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

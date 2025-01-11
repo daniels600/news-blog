@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import NavBar from "@/components/navbar";
+// import NavBar from "@/components/navbar";
 import NewsList from "@/components/NewsList";
 import Loading from "./loading"
 export default function Home({
@@ -13,7 +13,7 @@ export default function Home({
 
   return (
     <>
-      <NavBar />
+     
       <Suspense fallback={<Loading />}>
         <NewsList page={page} category={category} query={query} />
       </Suspense>
