@@ -157,7 +157,7 @@ export default async function NewsList({ page, category, query }: { page: number
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious
-                        href={page > 1 ? `/?page=${page - 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
+                        href={page > 1 ? `/news-api?page=${page - 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
                         className={page <= 1 ? 'pointer-events-none opacity-50' : ''}
                         isActive={page > 1}
                       />
@@ -177,7 +177,7 @@ export default async function NewsList({ page, category, query }: { page: number
                       return (
                         <PaginationItem key={pageNumber}>
                           <PaginationLink
-                            href={`/?page=${pageNumber}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}`}
+                            href={`/news-api?page=${pageNumber}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}`}
                             isActive={pageNumber === page}
                           >
                             {pageNumber}
@@ -187,7 +187,7 @@ export default async function NewsList({ page, category, query }: { page: number
                     })}
                     <PaginationItem>
                       <PaginationNext
-                        href={page < totalPages ? `/?page=${page + 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
+                        href={page < totalPages ? `/news-api?page=${page + 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
                         className={page >= totalPages ? 'pointer-events-none opacity-50' : ''}
                         isActive={page < totalPages}
                       />
