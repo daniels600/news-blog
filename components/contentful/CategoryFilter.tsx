@@ -24,6 +24,7 @@ const categories = [
   { label: "Science", value: "science" },
   { label: "Health", value: "health" },
   { label: "Entertainment", value: "entertainment" },
+
 ];
 
 export default function CategoryFilter({ initialCategory = '' }) {
@@ -42,10 +43,14 @@ export default function CategoryFilter({ initialCategory = '' }) {
     }
 
     setValue(currentValue);
-    // Only navigate if the category actually changed
+    // Keep the existing query parameter if it exists
+    const searchParams = new URLSearchParams(window.location.search);
+    const existingQuery = searchParams.get('q');
+
     const newPath = currentValue && currentValue !== 'all'
-      ? `/?category=${currentValue}`
-      : '/';
+      ? `/contentful?category=${currentValue}${existingQuery ? `&q=${existingQuery}` : ''}`
+      : `/contentful${existingQuery ? `?q=${existingQuery}` : ''}`;
+
     router.push(newPath);
     setOpen(false);
   };

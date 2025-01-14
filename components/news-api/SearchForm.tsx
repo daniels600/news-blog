@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Input } from './ui/input'
+import { Input } from '../ui/input'
 
 export default function SearchForm({ initialQuery = '' }) {
   const [query, setQuery] = useState(initialQuery)
@@ -10,7 +10,7 @@ export default function SearchForm({ initialQuery = '' }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    router.push(`/?q=${encodeURIComponent(query)}`)
+    router.push(`/news-api?q=${encodeURIComponent(query)}`)
   }
 
   return (
@@ -32,7 +32,7 @@ export default function SearchForm({ initialQuery = '' }) {
             type="button"
             onClick={() => {
               setQuery('')
-              router.push('/')
+              router.push('/news-api')
             }}
             className="absolute inset-y-0 right-3 flex items-center"
           >

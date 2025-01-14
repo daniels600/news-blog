@@ -1,6 +1,6 @@
 import React from "react";
-import CategoryFilter from "@/components/CategoryFilter"
-import SearchForm from "@/components/SearchForm"
+import CategoryFilter from "@/components/news-api/CategoryFilter"
+import SearchForm from "@/components/news-api/SearchForm"
 import {
   Pagination,
   PaginationContent,
@@ -9,7 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import NewsImage from '@/components/NewsImage'
+import NewsImage from '@/components/news-api/NewsImage'
 
 interface Article {
   url: string;
