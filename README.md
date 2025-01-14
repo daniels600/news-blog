@@ -1,11 +1,13 @@
-# News API Reader with Next.js
+# News Blog with Next.js, Contentful, and News API
 
-A modern web application built with Next.js that fetches and displays news articles from NewsAPI.org. The application features category filtering, search functionality, and a responsive grid layout.
+A modern web application built with Next.js that combines content management through Contentful and news articles from NewsAPI.org. The application features dynamic content management, category filtering, search functionality, and a responsive grid layout.
 
 ## Features
 
-- News article display in a responsive grid layout
-- Category filtering (Technology, Business, Science, Health, Entertainment)
+- Dynamic content management with Contentful
+- News article display from NewsAPI.org
+- Responsive grid layout
+- Category filtering
 - Search functionality
 - Loading skeletons for better UX
 - Dark mode support
@@ -13,21 +15,35 @@ A modern web application built with Next.js that fetches and displays news artic
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before you begin, ensure you have:
 - Node.js (version 16.x or higher)
 - npm or yarn
 - Git
+- Contentful account
+- NewsAPI.org account
 
-## API Key Setup
+## API Keys and Configuration
 
+### News API Setup
 1. Visit [NewsAPI.org](https://newsapi.org/)
 2. Sign up for a free account
 3. Get your API key from the dashboard
-4. Create a `.env.local` file in the root directory of the project
-5. Add your API key to the `.env.local` file:
+
+### Contentful Setup
+1. Log in to your [Contentful](https://www.contentful.com/) account
+2. Create a new space or use an existing one
+3. Navigate to Settings → API keys
+4. Create a new API key or use an existing one
+5. Note down your Space ID and Content Delivery API access token
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following:
 
 ```env
-NEWS_API_KEY=your_api_key_here
+NEWS_API_KEY=your_api_key
+CONTENTFUL_SPACE_ID=your_space_id
+CONTENTFUL_ACCESS_TOKEN=your_access_token
 ```
 
 ## Installation
@@ -57,35 +73,122 @@ yarn dev
 ## Project Structure
 
 ```
-news-api-reader/
-├── app/
-│   ├── components/
-│   │   ├── NewsList.tsx
-│   │   ├── CategoryFilter.tsx
-│   │   └── Loading.tsx
-│   ├── layout.tsx
-│   └── page.tsx
-├── public/
-├── .env.local
-└── package.json
+Directory structure:
+└── daniels600-news-blog/
+    ├── README.md
+    ├── components.json
+    ├── next.config.mjs
+    ├── package.json
+    ├── pnpm-lock.yaml
+    ├── postcss.config.mjs
+    ├── tailwind.config.ts
+    ├── tsconfig.json
+    ├── .eslintrc.json
+    ├── app/
+    │   ├── globals.css
+    │   ├── layout.tsx
+    │   ├── loading.tsx
+    │   ├── page.tsx
+    │   ├── about/
+    │   │   └── page.tsx
+    │   ├── contentful/
+    │   │   ├── loading.tsx
+    │   │   └── page.tsx
+    │   ├── fonts/
+    │   │   ├── GeistMonoVF.woff
+    │   │   └── GeistVF.woff
+    │   ├── news-api/
+    │   │   ├── loading.tsx
+    │   │   └── page.tsx
+    │   └── posts/
+    │       └── [id]/
+    │           ├── loading.tsx
+    │           └── page.tsx
+    ├── components/
+    │   ├── PrelineScript.tsx
+    │   ├── navbar.tsx
+    │   ├── theme-provider.tsx
+    │   ├── toggle-theme.tsx
+    │   ├── contentful/
+    │   │   ├── CategoryFilter.tsx
+    │   │   ├── ContentfulImage.tsx
+    │   │   ├── ContentfulNewsList.tsx
+    │   │   ├── ContentfulPosts.tsx
+    │   │   ├── PostContent.tsx
+    │   │   └── SearchForm.tsx
+    │   ├── news-api/
+    │   │   ├── CategoryFilter.tsx
+    │   │   ├── NewsImage.tsx
+    │   │   ├── NewsList.tsx
+    │   │   └── SearchForm.tsx
+    │   └── ui/
+    │       ├── avatar.tsx
+    │       ├── button.tsx
+    │       ├── card.tsx
+    │       ├── command.tsx
+    │       ├── dialog.tsx
+    │       ├── dropdown-menu.tsx
+    │       ├── input.tsx
+    │       ├── menubar.tsx
+    │       ├── navigation-menu.tsx
+    │       ├── pagination.tsx
+    │       ├── popover.tsx
+    │       ├── radio-group.tsx
+    │       ├── scroll-area.tsx
+    │       ├── select.tsx
+    │       ├── separator.tsx
+    │       ├── sheet.tsx
+    │       ├── sidebar.tsx
+    │       ├── skeleton.tsx
+    │       ├── tabs.tsx
+    │       └── tooltip.tsx
+    ├── hooks/
+    │   └── use-mobile.tsx
+    ├── lib/
+    │   ├── contentful.ts
+    │   └── utils.ts
+    ├── public/
+    └── types/
+        ├── blog.ts
+        └── index.ts
+
 ```
 
-## Environment Variables
+## Content Model (Contentful)
 
-Create a `.env.local` file in the root directory and add the following:
+Ensure your Contentful space has the following content models:
 
-```env
-NEWS_API_KEY=your_api_key_here
+1. Blog Post
+   - Title (Short text)
+   - Slug (Short text)
+   - Content (Rich text)
+   - Featured Image (Media)
+   - Categories (Reference)
+
+2. Category
+   - Name (Short text)
+   - Slug (Short text)
+   - Description (Long text)
+
+## API Integration
+
+### Contentful API
+```typescript
+// lib/contentful.ts
+import { createClient } from 'contentful';
+
+const client = createClient({
+  space: process.env.CONTENTFUL_SPACE_ID!,
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
+});
 ```
 
-Note: Never commit your `.env.local` file to version control. It's already included in `.gitignore`.
-
-## API Routes
-
-The application uses the following NewsAPI endpoints:
-
-- Top Headlines: `https://newsapi.org/v2/top-headlines`
-- Everything: `https://newsapi.org/v2/everything`
+### News API
+```typescript
+// lib/newsapi.ts
+const NEWS_API_BASE_URL = 'https://newsapi.org/v2';
+const API_KEY = process.env.NEWS_API_KEY;
+```
 
 ## Available Scripts
 
@@ -111,31 +214,34 @@ npm run lint
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-- [Next.js](https://nextjs.org/)
-- [NewsAPI](https://newsapi.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-
 ## Troubleshooting
 
 ### Common Issues
 
 1. **API Key Issues**
-   - Ensure your API key is correctly set in `.env.local`
-   - Check if you've exceeded your API request limit
+   - Verify all environment variables are correctly set in `.env.local`
+   - Check API request limits for both services
+   - Ensure Contentful API key has appropriate permissions
 
-2. **Build Errors**
-   - Make sure all dependencies are installed
-   - Clear the `.next` cache folder and rebuild
+2. **Content Type Issues**
+   - Verify Contentful content models match the expected structure
+   - Check for required fields in Contentful entries
 
-3. **Loading Issues**
-   - Check your internet connection
-   - Verify the API endpoints are accessible
+3. **Build Errors**
+   - Clear the `.next` cache folder
+   - Ensure all dependencies are installed
+   - Check for TypeScript errors
 
 For additional help, please open an issue in the repository.
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/)
+- [Contentful](https://www.contentful.com/)
+- [NewsAPI](https://newsapi.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details
