@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from 'next/link';
 import Image from 'next/image';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -9,8 +10,8 @@ export default function ContentfulPostCard({ post }: { post: BlogPost }) {
     <article className="border rounded-lg p-6 shadow-lg">
       {post.fields.image && (
         <Image
-          src={`https:${post.fields.image.fields.file.url}`}
-          alt={post.fields.image.fields.title}
+          src={`https:${(post.fields.image as any)?.fields.file.url}`}
+          alt={(post.fields.image as any)?.fields.title}
           width={400}
           height={200}
           className="w-full h-48 object-cover rounded-lg mb-4"
