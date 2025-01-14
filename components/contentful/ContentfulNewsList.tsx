@@ -128,8 +128,8 @@ export default async function ContentfulNewsList({
                   {post.fields.image && (
                     <div className="w-full mb-6">
                       <ContentfulImage
-                        src={post.fields.image.fields.file.url}
-                        alt={post.fields.image.fields.title}
+                        src={(post.fields.image as any)?.fields.file.url}
+                        alt={(post.fields.image as any)?.fields.title}
                       />
                     </div>
                   )}
@@ -139,18 +139,18 @@ export default async function ContentfulNewsList({
                     </h3>
                     {post.fields.description && (
                       <p className="text-gray-600 dark:text-neutral-400 line-clamp-3 mb-6">
-                        {post.fields.description.content[0]?.content[0]?.value || ''}
+                        {(post as any)?.fields.description.content[0]?.content[0]?.value || ''}
                       </p>
                     )}
                     <div className="mt-auto">
-                      {post.fields.categories && post.fields.categories.length > 0 && (
+                      {(post as any)?.fields.categories && (post as any)?.fields.categories.length > 0 && (
                         <span className="inline-block px-3 py-1 mb-3 text-xs font-medium text-blue-600 bg-blue-100 rounded-full dark:bg-blue-900/50 dark:text-blue-300">
                           {post.fields.categories[0]}
                         </span>
                       )}
                       {post.fields.author && (
                         <h4 className="font-semibold text-gray-800 dark:text-neutral-200">
-                          {post.fields.author.fields.name}
+                          {(post.fields.image as any)?.fields.name}
                         </h4>
                       )}
                       <p className="text-xs text-gray-500 dark:text-neutral-500">

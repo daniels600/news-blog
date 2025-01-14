@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -9,7 +10,7 @@ export const revalidate = 60;
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((post) => ({
-    id: post.fields.id.toString(),
+    id: (post as any)?.fields.id.toString(),
   }));
 }
 
@@ -46,19 +47,19 @@ export default async function PostContent({ params }: { params: { id: string } }
       {post.fields.image && (
 
         <Image
-          src={`https:${post.fields.image.fields.file.url}`}
-          alt={post.fields.image.fields.title}
+          src={`https:${(post.fields.image as any)?.fields.file.url}`}
+          alt={(post.fields.image as any)?.fields.title}
           width={800}
           height={400}
           className="w-full h-64 object-cover rounded-lg mb-8"
           placeholder="blur"
-          blurDataURL={`https:${post.fields.image.fields.file.url}?w=50&q=10`}
+          blurDataURL={`https:${(post.fields.image as any)?.fields.file.url}?w=50&q=10`}
           priority
         />
 
       )}
       <div className="flex gap-2 mb-4 flex-wrap">
-        {post.fields.categories && post.fields.categories.map((category) => (
+        {(post as any)?.fields.categories && (post as any)?.fields.categories.map((category: any) => (
           <Link
             key={category}
             href={`/category/${category.toLowerCase()}`}
@@ -68,13 +69,13 @@ export default async function PostContent({ params }: { params: { id: string } }
           </Link>
         ))}
       </div>
-      <h1 className="text-4xl font-bold mb-4">{post.fields.title}</h1>
+      <h1 className="text-4xl font-bold mb-4">{(post as any)?.fields.title}</h1>
       <div className="text-gray-600 mb-8">
-        By {post.fields.author.fields.name} |
-        {new Date(post.fields.createdDate).toLocaleDateString()}
+        By {(post as any)?.fields.author.fields.name} |
+        {new Date((post as any)?.fields.createdDate).toLocaleDateString()}
       </div>
       <div className="prose max-w-none">
-        {documentToReactComponents(post.fields.description)}
+        {documentToReactComponents((post as any)?.fields.description)}
       </div>
     </article>
   );

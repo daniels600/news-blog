@@ -1,49 +1,35 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { Document } from '@contentful/rich-text-types';
+import { Asset, EntryFields, EntrySkeletonType } from 'contentful';
+
+// Define the Author interface
 export interface Author {
   sys: {
     id: string;
+    type: string;
+    linkType: string;
   };
   fields: {
     name: string;
   };
 }
 
-export interface BlogPost {
+// Define the BlogPost interface
+export interface BlogPost extends EntrySkeletonType {
+  contentTypeId: 'newBlog';  // Add this line - must match your Contentful content type ID
   sys: {
     id: string;
+    type: string;
     createdAt: string;
     updatedAt: string;
+    locale: string;
   };
   fields: {
-    id: number;
-    title: string;
-    createdDate?: string;  
-    description?: {        
-      nodeType: string;
-      data: {};
-      content: any[];
-    };
-    image?: {             
-      fields: {
-        file: {
-          url: string;
-          details: {
-            image: {
-              width: number;
-              height: number;
-            };
-          };
-        };
-        title: string;
-      };
-    };
-    author?: {            
-      sys: {
-        id: string;
-      };
-      fields: Author['fields'];
-    };
-    categories?: string[];  
+    id: EntryFields.Integer;
+    title?: EntryFields.Symbol;
+    createdDate?: EntryFields.Date;
+    description?: Document;
+    image?: Asset;
+    author?: Author;
+    categories: EntryFields.Symbol[];
   };
 }
