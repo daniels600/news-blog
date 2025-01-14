@@ -173,7 +173,7 @@ export default async function ContentfulNewsList({
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious
-                        href={page > 1 ? `/?page=${page - 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
+                        href={page > 1 ? `/contentful?page=${page - 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
                         className={page <= 1 ? 'pointer-events-none opacity-50' : ''}
                         isActive={page > 1}
                       />
@@ -193,7 +193,7 @@ export default async function ContentfulNewsList({
                       return (
                         <PaginationItem key={pageNumber}>
                           <PaginationLink
-                            href={`/?page=${pageNumber}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}`}
+                            href={`/contentful?page=${pageNumber}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}`}
                             isActive={pageNumber === page}
                           >
                             {pageNumber}
@@ -203,7 +203,7 @@ export default async function ContentfulNewsList({
                     })}
                     <PaginationItem>
                       <PaginationNext
-                        href={page < totalPages ? `/?page=${page + 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
+                        href={page < totalPages ? `/contentful?page=${page + 1}${category ? `&category=${category}` : ''}${query ? `&q=${query}` : ''}` : '#'}
                         className={page >= totalPages ? 'pointer-events-none opacity-50' : ''}
                         isActive={page < totalPages}
                       />
